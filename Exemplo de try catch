@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
+public class Principal {
+
+	public Principal() {
+
+		// JOptionPane.showMessageDialog(null, "Olá, tudo bem?");
+
+		String resposta = JOptionPane.showInputDialog("Digite uma opção: \n1 - incluir\n2 - listar");
+
+		boolean erro = false;
+		do {
+			try {
+				String nome = JOptionPane.showInputDialog("Digite um nome");
+				Produto p1 = new Produto(nome, Unidade.KG);
+
+				Produto p2 = new Produto("Água", Unidade.L);
+
+				System.out.println("Nome: " + p1.getNome() + "\nUnidade: " + p1.getUnidade());
+
+				String qtd = JOptionPane.showInputDialog("Digite a quantidade: ");
+				ItemCompra item1 = new ItemCompra(p1, Integer.parseInt(qtd), 6, 10);
+				ItemCompra item2 = new ItemCompra(p2, 2, 2, 7);
+				ItemCompra item3 = new ItemCompra(new Produto("Carne", Unidade.KG), 6, 5, 50);
+
+				Compra c1 = new Compra();
+				c1.addItem(item1);
+				c1.addItem(item2);
+				c1.addItem(item3);
+
+				int opcao = Integer.parseInt(resposta);
+				switch (opcao) {
+				case 1:
+					JOptionPane.showMessageDialog(null, c1.listarItens());
+					break;
+				case 2:
+					JOptionPane.showMessageDialog(null, "Listar");
+					break;
+				}
+				System.out.println(c1.listarItens());
+
+				c1.excluirItem("Laranja");
+				System.out.println(c1.listarItens());
+
+				c1.alterarItem("Carne", 10);
+				System.out.println(c1.listarItens());
+				erro = false;
+			} catch (IllegalArgumentException erroI) {
+				JOptionPane.showMessageDialog(null, erroI.getMessage());
+				erro = true;
+			} finally {
+				JOptionPane.showMessageDialog(null, "Fim do programa");
+			}
+		} while (erro);
+
+	}
+
+	private void incluir() {
+
+	}
+
+	public static void main(String[] args) {
+		new Principal();
+
+	}
+
+}
